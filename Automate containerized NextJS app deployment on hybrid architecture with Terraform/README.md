@@ -108,7 +108,7 @@ TERRAFORM/
 
 Within the `proxmox` subdirectory of the project, the following Terraform configuration files are configured:
 
-```json
+```bash
 terraform {
   required_providers {
     proxmox = {
@@ -121,7 +121,7 @@ terraform {
 
 `provider.tf` file specifies the required Terraform provider for Proxmox, configuring its source and version.
 
-```json
+```bash
 provider "proxmox" {
   # Configuration options
   pm_api_url          = var.proxmox_api_url
@@ -177,7 +177,7 @@ resource "proxmox_lxc" "basic" {
 
 `proxmox.tf` file creates a Proxmox LXC container with specific settings, including storage, networking, and Docker configuration for deploying the containerized NextJS application stored in Docker Hub.
 
-```json
+```bash
 # Proxmox module variables
 
 variable "proxmox_api_url" {
@@ -203,7 +203,7 @@ variable "root_password" {
 
 `variables.tf` file defines input variables for Proxmox global settings (Proxmox API URL, API Token, etc.), as well as LXC container’s root password.
 
-```json
+```bash
 # Proxmox module outputs
 
 output "proxmox_lxc_container_ip" {
@@ -221,7 +221,7 @@ This subsection leverages AWS to host the containerized NextJS application, ensu
 
 Within the `vpc` directory of the project, the following Terraform configuration files are configured:
 
-```json
+```bash
 # Fetch the list of availability zones in the current AWS region
 data "aws_availability_zones" "available" {}
 
@@ -330,7 +330,7 @@ resource "aws_route_table_association" "private" {
 
 `vpc.tf` configuration file sets up a structured VPC with both public and private subnets across different AZs, ensuring internet access for public resources, while keeping private resources isolated.
 
-```json
+```bash
 # VPC module variables
 
 variable "vpc_cidr" {
@@ -356,7 +356,7 @@ variable "private_subnet_count" {
 
 Within `variables.tf` file we define the variables of the module, which provide flexibility in defining the VPC architecture, ensuring scalability while maintaining modularity in Terraform deployments. Variables like `vpc_cidr`, `public_subnet_count`, have been defined in this file, while being interpolated to the previous configuration file.
 
-```json
+```bash
 # VPC module outputs
 
 output "vpc_id" {
@@ -400,7 +400,7 @@ output "aws_availability_zones" {
 
 Within the `server`directory of the project, the following Terraform configuration files are configured:
 
-```json
+```bash
 #Lookup Latest Ubuntu 22.04 AMI Image
 data "aws_ami" "ubuntu" {
   most_recent = true
@@ -512,7 +512,7 @@ resource "local_file" "private_key_pem" {
 
 `server.tf` configuration file automates the deployment of an Ubuntu-based EC2 instance with a dockerized NextJS application. It ensures the instance is publicly accessible via SSH, and allows access to NextJS app. The setup also enforces security best practices with a dedicated security group and an SSH key pair created locally and uploaded to AWS.
 
-```json
+```bash
 # EC2 module variables
 
 variable "instance_type" {
@@ -543,7 +543,7 @@ variable "eip_allocation_id" {
 
 Within the `root`directory of the project, the following Terraform configuration files are configured:
 
-```json
+```bash
 # Configure AWS provider
 provider "aws" {
   region = var.aws_region
@@ -577,7 +577,7 @@ module "server" {
 
 It enables reusability and scalability, as each module can be modified independently. It also improves flexible deployment, as users can change AWS regions or subnet allocation without modifying core infrastructure code.
 
-```json
+```bash
 # Global variables
 
 variable "proxmox_api_url" {
@@ -615,7 +615,7 @@ variable "aws_region" {
 
 `variables.tf` configuration file defines global variables to ensure flexibility and maintainability in the infrastructure deployment (allowing Proxmox credentials,  AWS Region or NextJS port modifications without affecting core infrastructure logic).
 
-```json
+```bash
 # Global outputs
 
 output "nextjs_onprem_access" {
